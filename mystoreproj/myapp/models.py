@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -10,6 +11,7 @@ class User(models.Model):
     def __str__(self):
         return f'Username: {self.name}, email: {self.email}, phone: {self.phone}, address: {self.address}'
 
+
 class Product(models.Model):
     prod_name = models.CharField(max_length=100)
     description = models.TextField()
@@ -19,6 +21,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f'Product: {self.prod_name}, desc: {self.description}, price: {self.price}, count: {self.prod_count}'
+
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
