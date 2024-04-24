@@ -9,7 +9,15 @@ class Command(BaseCommand):
     help = "Get order."
 
     def handle(self, *args, **kwargs):
-        order = Order.objects.filter(pk=1).first()
+        user = User.objects.filter(pk=7).first()
+        orders = Order.objects.filter(customer=user).all()   #first()
+        prods = set()
+        print(len(orders))
+        for order in orders:
+            for prod in order.products.all():
+                prods.add(prod.name())
+                print(prod.name())
+            print(prods)
         print(order.customer.name, order.products.all())
         # order.save()
         # self.stdout.write(f'{product}')

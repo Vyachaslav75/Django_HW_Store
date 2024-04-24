@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import logging
+from .models import Order
+from .models import User
+# from models import Product
+from datetime import date, timedelta
 
 logger = logging.getLogger(__name__)
+
 
 def index(request):
     html = '''
@@ -23,4 +28,15 @@ def mybase(request):
     return HttpResponse(html)
 
 
-# Create your views here.
+def get_products(request, id, days):
+    get_date = date.today() - timedelta(days=days)
+    user = User.objects.filter(pk=id).first()
+
+    orders = Order.objects.filter(customer=user, date_ordered__gt=get_date).all()
+    prods = set()
+    for order in orders:
+        for prod in order.products.all():
+            prods.add(prod.name())
+    my_order={'user': user, 'prods': prods}
+    #return HttpResponse(orders)
+    return render(request,'myapp/get_products.html', my_order)

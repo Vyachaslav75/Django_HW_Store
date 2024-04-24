@@ -7,6 +7,8 @@ class Command(BaseCommand):
     help = "Create user."
 
     def handle(self, *args, **kwargs):
-        user = User(name='John', email='john@example.com', phone='2343234534', address='Aasdsf, wewer')
-        user.save()
-        self.stdout.write(f'{user}')
+        for i in range(1, 20):
+            user = User(name=f'John{i}', email=f'john{i}@example.com', phone=f'2{i}43{i}34534',
+                        address=f'Aasdsf{i}, wewer{i}')
+            user.save()
+            self.stdout.write(f'{user}')
